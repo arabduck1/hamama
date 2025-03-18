@@ -360,16 +360,13 @@ const valueDisplay = document.getElementById("humidTX");
 
 const minVal = 0;
 const maxVal = 63;
-const sliderWidth = slider.clientWidth; // Get track width
-
 let isDragging = false;
-let sliderValue = 0; // Store value as a number
+let sliderValue = 0;
 
-function updateSlider(event) {
-    if (!isDragging) return;
-
+function updateSlider(positionX) {
     let rect = slider.getBoundingClientRect();
-    let offsetX = event.clientX - rect.left; // Get position relative to track
+    let offsetX = positionX - rect.left;
+    let sliderWidth = rect.width; // Get actual width
 
     // Clamp position within bounds
     offsetX = Math.max(0, Math.min(offsetX, sliderWidth));
@@ -380,18 +377,42 @@ function updateSlider(event) {
 
     // Move the thumb
     thumb.style.left = `${(sliderValue / maxVal) * 100}%`;
-
 }
 
-// Mouse events
-thumb.addEventListener("mousedown", () => isDragging = true);
-document.addEventListener("mousemove", updateSlider);
-document.addEventListener("mouseup", () => isDragging = false);
+function startDrag(event) {
+    isDragging = true;
+    let positionX = event.touches ? event.touches[0].clientX : event.clientX;
+    updateSlider(positionX);
 
-// Example: Use the value in another function
+    // Prevent scrolling on touch
+    if (event.touches) event.preventDefault();
+}
+
+function moveDrag(event) {
+    if (!isDragging) return;
+    let positionX = event.touches ? event.touches[0].clientX : event.clientX;
+    updateSlider(positionX);
+}
+
+function stopDrag() {
+    isDragging = false;
+}
+
+// Mouse Events
+thumb.addEventListener("mousedown", startDrag);
+document.addEventListener("mousemove", moveDrag);
+document.addEventListener("mouseup", stopDrag);
+
+// Touch Events (for mobile)
+thumb.addEventListener("touchstart", startDrag);
+document.addEventListener("touchmove", moveDrag, { passive: false }); // Prevent scrolling
+document.addEventListener("touchend", stopDrag);
+
+// Example function to get the value
 function useSliderValuehumid() {
-    return sliderValue
+    return sliderValue;
 }
+
 
 
 
@@ -401,16 +422,13 @@ const valueDisplay1 = document.getElementById("tempTX");
 
 const minVal1 = 0;
 const maxVal1 = 63;
-const sliderWidth1 = slider1.clientWidth; // Get track width
-
 let isDragging1 = false;
-let sliderValue1 = 0; // Store value as a number
+let sliderValue1 = 0;
 
-function updateSlider1(event) {
-    if (!isDragging1) return;
-
+function updateSlider1(positionX) {
     let rect1 = slider1.getBoundingClientRect();
-    let offsetX1 = event.clientX - rect1.left; // Corrected event.clientX
+    let offsetX1 = positionX - rect1.left;
+    let sliderWidth1 = rect1.width; // Get actual width
 
     // Clamp position within bounds
     offsetX1 = Math.max(0, Math.min(offsetX1, sliderWidth1));
@@ -423,12 +441,36 @@ function updateSlider1(event) {
     thumb1.style.left = `${(sliderValue1 / maxVal1) * 100}%`;
 }
 
-// Mouse events for slider1
-thumb1.addEventListener("mousedown", () => isDragging1 = true);
-document.addEventListener("mousemove", updateSlider1);
-document.addEventListener("mouseup", () => isDragging1 = false);
+function startDrag1(event) {
+    isDragging1 = true;
+    let positionX = event.touches ? event.touches[0].clientX : event.clientX;
+    updateSlider1(positionX);
 
-// Example function to use the value
+    // Prevent scrolling on touch
+    if (event.touches) event.preventDefault();
+}
+
+function moveDrag1(event) {
+    if (!isDragging1) return;
+    let positionX = event.touches ? event.touches[0].clientX : event.clientX;
+    updateSlider1(positionX);
+}
+
+function stopDrag1() {
+    isDragging1 = false;
+}
+
+// Mouse Events
+thumb1.addEventListener("mousedown", startDrag1);
+document.addEventListener("mousemove", moveDrag1);
+document.addEventListener("mouseup", stopDrag1);
+
+// Touch Events (for mobile)
+thumb1.addEventListener("touchstart", startDrag1);
+document.addEventListener("touchmove", moveDrag1, { passive: false }); // Prevent scrolling
+document.addEventListener("touchend", stopDrag1);
+
+// Example function to get the value
 function useSliderValuetemp() {
     return sliderValue1;
 }
@@ -442,16 +484,13 @@ const valueDisplay2 = document.getElementById("lightTX");
 
 const minVal2 = 0;
 const maxVal2 = 63;
-const sliderWidth2 = slider1.clientWidth; // Get track width
-
 let isDragging2 = false;
-let sliderValue2 = 0; // Store value as a number
+let sliderValue2 = 0;
 
-function updateSlider2(event) {
-    if (!isDragging2) return;
-
+function updateSlider2(positionX) {
     let rect2 = slider2.getBoundingClientRect();
-    let offsetX2 = event.clientX - rect2.left; // Corrected event.clientX
+    let offsetX2 = positionX - rect2.left;
+    let sliderWidth2 = rect2.width; // Get actual width
 
     // Clamp position within bounds
     offsetX2 = Math.max(0, Math.min(offsetX2, sliderWidth2));
@@ -464,15 +503,40 @@ function updateSlider2(event) {
     thumb2.style.left = `${(sliderValue2 / maxVal2) * 100}%`;
 }
 
-// Mouse events for slider1
-thumb2.addEventListener("mousedown", () => isDragging2 = true);
-document.addEventListener("mousemove", updateSlider2);
-document.addEventListener("mouseup", () => isDragging2 = false);
+function startDrag2(event) {
+    isDragging2 = true;
+    let positionX = event.touches ? event.touches[0].clientX : event.clientX;
+    updateSlider2(positionX);
 
-// Example function to use the value
+    // Prevent scrolling on touch
+    if (event.touches) event.preventDefault();
+}
+
+function moveDrag2(event) {
+    if (!isDragging2) return;
+    let positionX = event.touches ? event.touches[0].clientX : event.clientX;
+    updateSlider2(positionX);
+}
+
+function stopDrag2() {
+    isDragging2 = false;
+}
+
+// Mouse Events
+thumb2.addEventListener("mousedown", startDrag2);
+document.addEventListener("mousemove", moveDrag2);
+document.addEventListener("mouseup", stopDrag2);
+
+// Touch Events (for mobile)
+thumb2.addEventListener("touchstart", startDrag2);
+document.addEventListener("touchmove", moveDrag2, { passive: false }); // Prevent scrolling
+document.addEventListener("touchend", stopDrag2);
+
+// Example function to get the value
 function useSliderValuelight() {
     return sliderValue2;
 }
+
 
 
 
